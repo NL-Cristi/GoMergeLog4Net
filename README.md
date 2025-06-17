@@ -47,6 +47,26 @@ chmod +x build_release.sh
 powershell -ExecutionPolicy Bypass -File build_release.ps1
 ```
 
+### Packaging binaries into ZIP archives
+
+After running one of the release build scripts you can package each platform
+binary into its own `<platform>.zip` archive:
+
+* **Windows PowerShell**  – `zip_release.ps1`
+* **Linux / macOS**       – `zip_release.sh`
+
+All archives are written to `Release/ZIPS/` and are ready for upload to a
+GitHub release page.
+
+```bash
+# Linux / macOS
+chmod +x zip_release.sh
+./zip_release.sh
+
+# Windows
+powershell -ExecutionPolicy Bypass -File zip_release.ps1
+```
+
 ---
 
 ## Usage
@@ -65,7 +85,12 @@ Usage:
 ### Quick example
 
 ```bash
-./GoMergeLog4Net -p /var/log/myapp -workers 8
+# Linux / macOS
+./GoMergeLog4Net -p /var/log/myLogsFolder -workers 8
+
+#Windows -> 
+.\GoMergeLog4Net.exe -p C:\temp\myLogsFolder -workers 8
+
 ```
 
 Result:
@@ -90,34 +115,21 @@ GoMergeLog4Net/
   main.go                 # CLI + pipeline orchestrator
   build_release.sh        # bash release script
   build_release.ps1       # PowerShell release script
+  zip_release.sh          # bash packaging script
+  zip_release.ps1         # PowerShell packaging script
   TestFiles/              # sample logs used by golden tests
   README.md               # this file
 ```
 
 ---
 
-## Testing
-
-```
-# unit + golden tests (to be added)
-go test ./...
-```
-
-### Planned tests
-
-* `detectPattern`, `uniqueFileName`, `newScanner` – table-driven
-* Golden tests under `TestFiles/` to assert end-to-end output is stable.
-
----
 
 ## Contributing
 
 1. Open an issue / discussion first if you plan major changes.
-2. Ensure `go vet ./...`, `staticcheck ./...`, `golangci-lint run` and
-   `go test ./...` all pass before submitting a PR.
+
 
 ---
 
 ## License
-
-MIT © Control-Up Support Tools 
+[Cristian Negulescu](https://github.com/NL-Cristi) - [MIT © SoftwareMechanic Tools](https://softwaremechanic.me/)

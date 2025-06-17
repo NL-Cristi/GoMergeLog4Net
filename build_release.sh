@@ -9,7 +9,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 APP_DIR="${SCRIPT_DIR}"            # main.go is in the same dir
 APP_NAME="GoMergeLog4Net"          # binary name
-OUT_ROOT="${SCRIPT_DIR}/Release"   # top-level release folder
+OUT_ROOT="${SCRIPT_DIR}/Release/Binaries"  # match PowerShell script
 # -------------------------------------------------------
 
 PLATFORMS=(               # {GOOS}/{GOARCH}
@@ -24,6 +24,8 @@ VERSION=$(git -C "${SCRIPT_DIR}" describe --tags --always 2>/dev/null || echo "d
 LDFLAGS="-s -w -X main.version=${VERSION}"
 
 mkdir -p "${OUT_ROOT}"
+
+echo "Building version: ${VERSION}"
 
 for target in "${PLATFORMS[@]}"; do
   IFS=/ read -r GOOS GOARCH <<<"${target}"
